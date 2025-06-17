@@ -1,0 +1,85 @@
+﻿<Page x:Class="LatypovDinarDemo2025.Pages.MaterialListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LatypovDinarDemo2025.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1100"
+      Title="MaterialListPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="69*"/>
+            <RowDefinition Height="581*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center">Список материалов</TextBlock>
+
+        <Button Name="AddBtn" Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15 0" Click="AddBtn_Click">Добавить</Button>
+                
+        <!-- При нажатии два раза на элемент из ListView открывается страница редактирования -->
+        <ListView Name="MainListView" Grid.Row="1" MouseDoubleClick="MainListView_MouseDoubleClick">
+
+            <!-- Переопределяем стандартный шаблон панельки для вывода предметов -->
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" Width="1100"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <!-- Переопределяем стандартный шаблон самого предмета в списке -->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="10" Height="120" Width="1000" BorderBrush="Black" BorderThickness="1">
+                        <Grid Margin="20 15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 2">
+                                    <TextBlock Text="{Binding MaterialType.Name}" FontSize="16"></TextBlock>
+                                                
+                                    <!-- {} - это чтобы потом указать строку после нее которая будет показываться
+                                                        {0} - сюда вставляется то значение которое забиндено, т.е. Name -->
+                                    <TextBlock  Text="{Binding Name, StringFormat={} | {0}}" FontSize="16"></TextBlock>
+                                </StackPanel>
+                                
+                                <!-- Минимальное количество -->
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 2">
+                                    <TextBlock Width="185">Минимальное количество:</TextBlock>
+                                    <TextBlock Text="{Binding MinCount}" Margin="0 0 3 0"></TextBlock>
+                                    <TextBlock Text="{Binding Unit.Name}"></TextBlock>
+                                </StackPanel>
+
+                                <!-- Количество на складе -->
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 2">
+                                    <TextBlock Width="185">Количество на складе:</TextBlock>
+                                    <TextBlock Text="{Binding CountInStorage}" Margin="0 0 3 0"></TextBlock>
+                                    <TextBlock Text="{Binding Unit.Name}"></TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+                                    <TextBlock Margin="0 0 3 0">Цена:</TextBlock>
+                                    <TextBlock Text="{Binding PricePerOne, StringFormat={}{0} р}" Margin="0 0 3 0"></TextBlock>
+                                    <TextBlock Text="/ Единица измерения:" Margin="3 0 0 0"></TextBlock>
+                                    <TextBlock Text="{Binding Unit.Name}" Margin="3 0 0 0"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock Margin="0 0 3 0" FontSize="18">Стоимость партии:</TextBlock>
+                                <TextBlock Width="130" FontSize="18" Text="{Binding OrderPrice, StringFormat={}{0:F2} р}"></TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+        
+    </Grid>
+</Page>
